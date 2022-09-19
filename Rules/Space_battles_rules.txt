@@ -1,0 +1,24 @@
+Rules of Space Battles:
+
+You can choose between two gamemodes - multiplayer and singleplayer
+
+In singleplayer mode, 
+use 'W', 'A', 'S', 'D' keys on your keyboard to move up, left, down and right respectively
+
+use the spacebar to shoot bullets
+
+In multiplayer mode, 
+for player 1, use 'W', 'A', 'S', 'D' and left shift to move and shoot
+for player 2, use the up, down, left, right arrow keys and the right shift to move and shoot
+
+In both modes you must dodge the bullets of the opposing spaceship and try to hit the enemy
+
+In multiplayer mode you both have 10 health points and must dodge the bullets to stay alive
+the first one to lose all 10 health points loses the gamemodes
+
+In singleplayer mode you have 10 health points and must score as many hits against the ai as you can
+shooting and hitting the ai once gives you one point and you must try to get a highscore before losing all of your health
+
+Have Fun!
+
+playing this game helps improve your focus, concentration and reflexes

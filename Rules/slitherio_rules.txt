@@ -1,0 +1,17 @@
+Rules of Slither.io:
+
+You are a small snake that needs to survive in a world by eating the food that spawns
+
+Move your mouse to move and the snake will follow the cursor
+
+If your head collides with the body of another snake you die so make sure to look out for other snakes while scourging for food
+when someone else collides with your body, they die and spawn more food that you can eat
+
+You must evade other snakes and try to eat as much food as you can
+
+Right click your mouse to get a boost of speed but be careful as you may collide with another snake
+
+Playing this game helps you improve yopur reflexes and concentration
+
+Have Fun!
+
