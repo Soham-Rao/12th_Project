@@ -6,7 +6,7 @@ import tkinter
 import customtkinter as tk
 from Window_maker import Window_maker
 from PIL import Image, ImageTk
-from tkinter import E, W, PhotoImage, ttk, messagebox, END
+from tkinter import E, NO, RIGHT, W, Y, PhotoImage, ttk, messagebox, END
 from Login_Window import Login_Window
 
 
@@ -146,12 +146,12 @@ class Windows:
             Score_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
             Score_window.resizable(False, False)
 
-            f = open(os.path.join("","slither_highscore.csv"),'r')
-            csr = csv.reader(f)
-            D = {}
-            for i in csr:
-                D[i[0]] = i[1] #dictionary (username: score)
-            f.close()
+            # f = open(os.path.join("","slither_highscore.csv"),'r')
+            # csr = csv.reader(f)
+            # D = {}
+            # for i in csr:
+            #     D[i[0]] = i[1] #dictionary (username: score)
+            # f.close()
             
             def open_search():
                 search = entry.get()
@@ -183,16 +183,6 @@ class Windows:
                     D["user"] = "Not found"
                 entry.delete(0, END)
                         
-                data_tree = ttk.Treeview(master = Search_window)
-                data_tree['columns'] = ('Username','Highscore')
-                data_tree.column("#0", width = 0, minwidth = 0, )
-                data_tree.column("#1", width = 220, minwidth = 30, anchor = W)
-                data_tree.column("#2", width = 70, minwidth = 30, anchor = E)
-                data_tree.heading("#1",text = "Username", anchor = W)
-                data_tree.heading("#2", text = "Highscore", anchor = W)
-
-
-
                 details = tk.CTkLabel(master = Search_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
                 details.place(x = 0, y = 0, width = 1000, height = 200)
 
@@ -204,10 +194,41 @@ class Windows:
                     pass
 
 
+            style = ttk.Style()
+            style.theme_use("default")
+            style.configure("Treeview", background = "#1e1e1e", foreground = "black", rowheight = 50, fieldbackground = "#1e1e1e")
+            style.map("Treeview", background = [('selected', '#1a1a1a')])
+
+            tree_frame = tk.CTkFrame(master = Score_window)
+            tree_frame.place(x = 430, y = 20, height = 400, width = 440)
+
+            tree_scroll = tk.CTkScrollbar(master = tree_frame)
+            tree_frame.pack(side = RIGHT, fill = Y)
+
+            data_tree = ttk.Treeview(master = Score_window, yscrollcommand = tree_scroll.set)
+            #tree_scroll.config(command = data_tree.yview)
+
+            data_tree['columns'] = ('Username','Highscore')
+            data_tree.column("#0", width = 0, minwidth = 0, stretch = NO)
+            data_tree.column("#1", width = 220, minwidth = 30, anchor = W)
+            data_tree.column("#2", width = 100, minwidth = 30, anchor = E)
+            data_tree.heading("#1",text = "Username", anchor = W)
+            data_tree.heading("#2", text = "Highscore", anchor = W)
+
+            data_tree.place(x = 430, y = 20, height = 400, width = 400)
+
+            f = open(os.path.join("","slither_highscore.csv"),'r')
+            csr = csv.reader(f)
+            count = 0
+            for i in csr:
+                data_tree.insert(parent = '', index = 'end', iid = count, text = '', values = (i[0], i[1]))
+                count += 1
+
+            f.close()
 
             
-            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
-            scores.place(x = 0, y = 0, width = 1200, height = 500)
+            # scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
+            # scores.place(x = 0, y = 0, width = 1200, height = 500)
 
             search_button = tk.CTkButton(master = Score_window, text_color = "#0d0a01", text = "Search a user", text_font = ("Calibri", 12), bg_color = "#faf9f5", fg_color = "#faf9f5", hover_color = "#c9c8c1", command = open_search)
             search_button.place(x = 550, y = 540, width = 150, height = 30)
