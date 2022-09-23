@@ -390,6 +390,38 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
+        def see_user():
+            user_Window = tk.CTkToplevel()
+            user_Window.title("Admin Controls")
+
+            window_height = 500
+            window_width = 450
+
+            screen_width = user_Window.winfo_screenwidth()
+            screen_height = user_Window.winfo_screenheight()
+
+            x_cordinate = int((screen_width/2) - (window_width/2))
+            y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+            user_Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+            user_Window.resizable(False, False)
+
+            global bg_img
+
+            background = tk.CTkLabel(master = user_Window, image = bg_img)
+            background.place(x = 0, y = 0)
+
+            img = Image.open(os.path.join("imgs","back_button.png"))
+            #img.save(os.path.join("imgs","back_button.png"))
+            img = img.resize((20,20), resample = 0)
+            button_img = ImageTk.PhotoImage(img)
+
+            back_button = tk.CTkButton(master = user_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
+            back_button.place(x = 10, y = 10, width = 60, height = 30)
+
+            user_Window.mainloop()
+
+
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
@@ -397,11 +429,13 @@ class Login_Window():
 
 
         delete_button = tk.CTkButton(master = del_Window, text = "Delete", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_delete)
-        delete_button.place(x = 80, y = 170, width = 110, height = 50)
+        delete_button.place(x = 40, y = 170, width = 110, height = 50)
 
         back_button = tk.CTkButton(master = del_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 25)
 
+        see_user_button = tk.CTkButton(master = del_Window, text = "see users", text_font = ("Calibri",20), fg_color = "#c371c5", hover_color = "#e886eb", command = see_user)
+        see_user_button.place(x = 180, y = 170, width = 200, height = 50)
 
         del_Window.mainloop()
 
@@ -420,11 +454,6 @@ class Login_Window():
 
         admin_Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
         admin_Window.resizable(False, False)
-
-        # bgmg = Image.open(os.path.join("imgs","5thbg.jpg"))
-        # bgmg.save(os.path.join("imgs","5thbg.png"))
-        # img = bgmg.resize((window_width,window_height), resample = 0)
-        # bg_img = ImageTk.PhotoImage(img)
 
         global bg_img
 
@@ -482,11 +511,9 @@ class Login_Window():
                 p.dump(self.current_user, f)
                 f.close()
 
-                messagebox.showinfo("","Login Success")
+                self.del_window()
                 mysqldb.close()
-                user_Entry.delete(0, END)
-                pass_Entry.delete(0, END)
-
+                
                 self.windowmaker.user = str(self.current_user)
 
                 return True
@@ -507,3 +534,5 @@ class Login_Window():
 
         back_button = tk.CTkButton(master = admin_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 30)
+
+        admin_Window.mainloop()

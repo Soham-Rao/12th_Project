@@ -193,7 +193,7 @@ class Windows:
 
 
 
-                details = tk.CTkLabel(master = Search_window, text = D,text_font = ("calibri", 17), bg_color = "#1a1a1a")
+                details = tk.CTkLabel(master = Search_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
                 details.place(x = 0, y = 0, width = 1000, height = 200)
 
                 Search_window.mainloop()
