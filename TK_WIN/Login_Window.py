@@ -33,10 +33,13 @@ class Login_Window():
         Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
         Window.resizable(False, False)
 
+        global bg_img
+
         bgmg = Image.open(os.path.join("imgs",bgimg+".jpg"))
         bgmg.save(os.path.join("imgs",bgimg+".png"))
         img = bgmg.resize((window_width,window_height), resample = 0)
         bg_img = ImageTk.PhotoImage(img)
+
 
         background = tk.CTkLabel(master = Window, image = bg_img)
         background.place(x = 0, y = 0)
@@ -112,8 +115,8 @@ class Login_Window():
                 return False
 
 
-        def delu():
-            self.del_window()
+        def admin():
+            self.admin_window()
 
         def deswin():
             try:
@@ -146,8 +149,8 @@ class Login_Window():
         register_button = tk.CTkButton(master = Window, text = "Register", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = register)
         register_button.place(x = 195, y = 220, width = 110, height = 50)
 
-        delete_button = tk.CTkButton(master = Window, text = "Remove a User", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = delu)
-        delete_button.place(x = 150, y = 330, width = 200, height = 50)
+        admin_button = tk.CTkButton(master = Window, text = "Access Admin", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = admin)
+        admin_button.place(x = 150, y = 330, width = 200, height = 50)
 
         back_button = tk.CTkButton(master = Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 30)
@@ -402,3 +405,105 @@ class Login_Window():
 
         del_Window.mainloop()
 
+    def admin_window(self):
+        admin_Window = tk.CTkToplevel()
+        admin_Window.title("Admin Controls")
+
+        window_height = 500
+        window_width = 450
+
+        screen_width = admin_Window.winfo_screenwidth()
+        screen_height = admin_Window.winfo_screenheight()
+
+        x_cordinate = int((screen_width/2) - (window_width/2))
+        y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+        admin_Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+        admin_Window.resizable(False, False)
+
+        # bgmg = Image.open(os.path.join("imgs","5thbg.jpg"))
+        # bgmg.save(os.path.join("imgs","5thbg.png"))
+        # img = bgmg.resize((window_width,window_height), resample = 0)
+        # bg_img = ImageTk.PhotoImage(img)
+
+        global bg_img
+
+        background = tk.CTkLabel(master = admin_Window, image = bg_img)
+        background.place(x = 0, y = 0)
+
+        user_Entry = tk.CTkEntry(master = admin_Window)
+        user_Entry.place(x = 30, y = 110, width = 310, height = 30)
+
+        user_Entry.insert(0, "Username")
+
+        def on_enter(e):
+            user_Entry.delete(0, END)
+        def on_leave(e):
+            if user_Entry.get() == "":
+                user_Entry.insert(0, "Username")
+
+        user_Entry.bind("<FocusIn>", on_enter)
+        user_Entry.bind("<FocusOut>", on_leave)
+
+        pass_Entry = tk.CTkEntry(master = admin_Window, show = "*")
+        pass_Entry.place(x = 30, y = 160, width = 310, height = 30)
+
+        pass_Entry.insert(0, "Password")
+
+        def on_enter(e):
+            pass_Entry.delete(0, END)
+        def on_leave(e):
+            if pass_Entry.get() == "":
+                pass_Entry.insert(0, "Password")
+
+        pass_Entry.bind("<FocusIn>", on_enter)
+        pass_Entry.bind("<FocusOut>", on_leave)
+
+        def deswin():
+            try:
+                admin_Window.destroy()
+            except tkinter.TclError:
+                pass
+
+        def sql_login():
+            mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
+            mycursor = mysqldb.cursor()
+            username = user_Entry.get()
+            password = pass_Entry.get()
+
+            query = '''select * from admin where username = %s and password = %s'''
+            mycursor.execute(query, [(username),(password)])
+            data = mycursor.fetchall()
+
+            if data:
+
+                self.current_user = user_Entry.get()
+                f = open("user.bin", "wb")
+                p.dump(self.current_user, f)
+                f.close()
+
+                messagebox.showinfo("","Login Success")
+                mysqldb.close()
+                user_Entry.delete(0, END)
+                pass_Entry.delete(0, END)
+
+                self.windowmaker.user = str(self.current_user)
+
+                return True
+            else:
+                messagebox.showerror("","Incorrect Username or Password")
+                mysqldb.close()
+                user_Entry.delete(0, END)
+                pass_Entry.delete(0, END)
+                return False
+
+        img = Image.open(os.path.join("imgs","back_button.png"))
+        #img.save(os.path.join("imgs","back_button.png"))
+        img = img.resize((20,20), resample = 0)
+        button_img = ImageTk.PhotoImage(img)
+
+        login_button = tk.CTkButton(master = admin_Window, text = "Login", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_login)
+        login_button.place(x = 35, y = 220, width = 100, height = 50)
+
+        back_button = tk.CTkButton(master = admin_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
+        back_button.place(x = 10, y = 10, width = 60, height = 30)
