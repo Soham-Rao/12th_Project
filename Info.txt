@@ -1,0 +1,27 @@
+Project by -
+Soham S Rao
+Karun Anand
+
+Purpose of the project - 
+We decided to make this project with the purpose in mind of releasing peoples stress as playing games is a really great stress buster
+
+Uses of our Project - 
+Other than relieving stress our project also helps with
+- hand eye coordination
+- focusing better
+- better reflexes
+- better concentration
+- beter motor skills
+- developing strategies
+
+Future plans for our project - 
+we plan on developing the project further by introducing a new and exciting 3rd game and adding the feature to be update details in the login page
+We also plan on hosting it on the internet so people can enjoy our games and relieve themselves from stress
+
+Resources used - 
+python modules - pygame, customtkinter, os, pickle, csv,Pillow
+sql - 2 tables
+csv - 3 files
+binary - 1 file
+
+Hope you enjoy!!!

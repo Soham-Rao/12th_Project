@@ -102,6 +102,7 @@ class MainGame_Space:
             f.close()
             '''
             self.Highscore.create_csv(self.score)
+            self.Highscore.create_sql(self.score)
             self.quit = True
         
             pygame.quit()

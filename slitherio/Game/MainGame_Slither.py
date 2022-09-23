@@ -14,8 +14,8 @@ from Slither_Highscore import Highscore
 #DEFINING VARIABLES
 
 FPS = 60
-NUM_ORBS = 150
-NUM_AI = 7
+NUM_ORBS = 700
+NUM_AI = 15
 
 PLAYER_START_W = 50
 PLAYER_START_H = 50
@@ -35,7 +35,7 @@ class MainGame_Slither:
 
         self.WinDims = (1000,700)
         self.window = pygame.display.set_mode(self.WinDims)
-        pygame.display.set_caption("Slither.io  ")
+        pygame.display.set_caption("Slither.io")
         self.WinColor_grey = (75,75,75)
         self.quit = False
         self.clock = pygame.time.Clock()
@@ -110,6 +110,7 @@ class MainGame_Slither:
                 f.close()
                 '''
                 self.highscore.create_csv(self.player.score)
+                self.highscore.create_sql(self.player.score)
                 self.quit = True
         
 
@@ -118,7 +119,7 @@ class MainGame_Slither:
             if orb.update(self.snakes):
                 self.orbs.remove(orb)
 
-        if len(self.orbs) <= 100:
+        if len(self.orbs) <= 300:
             for i in range(NUM_ORBS):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
                 randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)
@@ -157,10 +158,10 @@ class MainGame_Slither:
                 snake.segments.clear() #removing body part
                 self.snakes.remove(snake) #removing head
 
-        if len(self.snakes) <= 3:
+        if len(self.snakes) <= 7:
             for i in range(NUM_AI):
-                randx = random.randint(-self.WinDims[0] * 1.5, self.WinDims[0] * 1.5)
-                randy = random.randint(-self.WinDims[1] * 1.5, self.WinDims[1] * 1.5)
+                randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
+                randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)
                 
                 randTexture = random.choice(self.textures)
 

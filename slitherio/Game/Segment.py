@@ -42,8 +42,8 @@ class Segment(Object):
             elif mousePress[0] == False:
                 self.speed = 8
 
-    def time(self, segments):
-        if self.newtime - self.prevtime >= 5000:
-            self.prevtime = self.newtime
-            segments.pop(-1)
+    # def time(self, segments):
+    #     if self.newtime - self.prevtime >= 5000:
+    #         self.prevtime = self.newtime
+    #         segments.pop(-1)
         

@@ -11,4 +11,3 @@ class Font:
     def renderFont(self, window, score):
         text = self.font.render("Score: " + str(score), True, self.color)
         window.blit(text,(0,0))
-

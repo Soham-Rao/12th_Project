@@ -14,16 +14,3 @@ class Object:
     #Drawing orbs and player in sub classes   
     def draw(self, window, Camera):
         window.blit(self.texture, Camera.translate(self.rect.x, self.rect.y))
-
-
-
-
-
-
-
-
-
-
-
-
-

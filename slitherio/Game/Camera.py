@@ -19,4 +19,3 @@ class Camera:
     def translate(self,x, y):
         return (x - self.x + self.winDims[0]/2 - self.playerDims[0]/2, 
                 y - self.y + self.winDims[1]/2 - self.playerDims[1]/2)
-

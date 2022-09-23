@@ -6,7 +6,7 @@ import tkinter
 import customtkinter as tk
 from Window_maker import Window_maker
 from PIL import Image, ImageTk
-from tkinter import PhotoImage, ttk, messagebox
+from tkinter import E, W, PhotoImage, ttk, messagebox, END
 from Login_Window import Login_Window
 
 
@@ -26,7 +26,8 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-        def leave():
+        def info():
+            self.info_window()
             try:
                 Window.destroy()
             except tkinter.TclError:
@@ -42,7 +43,7 @@ class Windows:
                 pass
 
 
-        FirstWin.Make_Win(Window = Window, window_title = "Arcade", bgimg = "1stbg", text1 = "Login/Logout", text2 = "Games", text3 = "Exit", text4 = "close", fgcolor = "#9532a8", hcolor = "#b55bc7", command1 = login, command2 = open_win2, command3 = leave, command4 = close)
+        FirstWin.Make_Win(Window = Window, window_title = "Arcade", bgimg = "1stbg", text1 = "Login/Logout", text2 = "Games", text3 = "Info", text4 = "Exit", fgcolor = "#9532a8", hcolor = "#b55bc7", command1 = login, command2 = open_win2, command3 = info, command4 = close)
         
 
 
@@ -152,11 +153,70 @@ class Windows:
                 D[i[0]] = i[1] #dictionary (username: score)
             f.close()
             
+            def open_search():
+                search = entry.get()
+
+                Search_window = tk.CTkToplevel()
+                window_height = 200
+                window_width = 1000
+                Search_window.title("Highscores of slither.io")
+
+                screen_width = Search_window.winfo_screenwidth()
+                screen_height = Search_window.winfo_screenheight()
             
-            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1e1e1e")
-            scores.place(x = 0, y = 0, width = 1200, height = 600)
+                x_cordinate = int((screen_width/2) - (window_width/2))
+                y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+                Search_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+                Search_window.resizable(False, False)
+
+                f = open("slither_highscore.csv", "r", newline = "")
+                csr = csv.reader(f)
+                D = {}
+                found = 0
+                for i in csr:
+                    if i[0] == search:
+                        D[i[0]] = i[1]
+                        found = 1
+                f.close()
+                if found == 0:
+                    D["user"] = "Not found"
+                entry.delete(0, END)
+                        
+                data_tree = ttk.Treeview(master = Search_window)
+                data_tree['columns'] = ('Username','Highscore')
+                data_tree.column("#0", width = 0, minwidth = 0, )
+                data_tree.column("#1", width = 220, minwidth = 30, anchor = W)
+                data_tree.column("#2", width = 70, minwidth = 30, anchor = E)
+                data_tree.heading("#1",text = "Username", anchor = W)
+                data_tree.heading("#2", text = "Highscore", anchor = W)
+
+
+
+                details = tk.CTkLabel(master = Search_window, text = D,text_font = ("calibri", 17), bg_color = "#1a1a1a")
+                details.place(x = 0, y = 0, width = 1000, height = 200)
+
+                Search_window.mainloop()
+                
+                try:
+                    Score_window.destroy()
+                except tkinter.TclError:
+                    pass
+
+
+
+            
+            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
+            scores.place(x = 0, y = 0, width = 1200, height = 500)
+
+            search_button = tk.CTkButton(master = Score_window, text_color = "#0d0a01", text = "Search a user", text_font = ("Calibri", 12), bg_color = "#faf9f5", fg_color = "#faf9f5", hover_color = "#c9c8c1", command = open_search)
+            search_button.place(x = 550, y = 540, width = 150, height = 30)
+
+            entry = tk.CTkEntry(master = Score_window)
+            entry.place(x = 480, y = 500, width = 300, height = 30)
 
             Score_window.mainloop()
+            
             try:
                 Slither_Window.destroy()
             except tkinter.TclError:
@@ -213,7 +273,7 @@ class Windows:
             Score_window = tk.CTkToplevel()
             window_height = 600
             window_width = 1200
-            Score_window.title("Highscores of slither.io")
+            Score_window.title("Highscores of space battles")
 
             screen_width = Score_window.winfo_screenwidth()
             screen_height = Score_window.winfo_screenheight()
@@ -231,11 +291,61 @@ class Windows:
                 D[i[0]] = i[1] #dictionary (username: score)
             f.close()
             
+            def open_search():
+                search = entry.get()
+
+                Search_window = tk.CTkToplevel()
+                window_height = 200
+                window_width = 1000
+                Search_window.title("Highscores of space battles")
+
+                screen_width = Search_window.winfo_screenwidth()
+                screen_height = Search_window.winfo_screenheight()
             
-            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1e1e1e")
-            scores.place(x = 0, y = 0, width = 1200, height = 600)
+                x_cordinate = int((screen_width/2) - (window_width/2))
+                y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+                Search_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+                Search_window.resizable(False, False)
+
+                f = open("space_highscore.csv", "r", newline = "")
+                csr = csv.reader(f)
+                D = {}
+                found = 0
+                for i in csr:
+                    if i[0] == search:
+                        D[i[0]] = i[1]
+                        found = 1
+                f.close()
+                if found == 0:
+                    D["user"] = "Not found"
+                entry.delete(0, END)
+                        
+
+                details = tk.CTkLabel(master = Search_window, text = D,text_font = ("calibri", 17), bg_color = "#1a1a1a")
+                details.place(x = 0, y = 0, width = 1000, height = 200)
+
+                Search_window.mainloop()
+                
+                try:
+                    Score_window.destroy()
+                except tkinter.TclError:
+                    pass
+
+
+
+            
+            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
+            scores.place(x = 0, y = 0, width = 1200, height = 500)
+
+            search_button = tk.CTkButton(master = Score_window, text_color = "#0d0a01", text = "Search a user", text_font = ("Calibri", 12), bg_color = "#faf9f5", fg_color = "#faf9f5", hover_color = "#c9c8c1", command = open_search)
+            search_button.place(x = 550, y = 540, width = 150, height = 30)
+
+            entry = tk.CTkEntry(master = Score_window)
+            entry.place(x = 480, y = 500, width = 300, height = 30)
 
             Score_window.mainloop()
+            
             try:
                 Space_Window.destroy()
             except tkinter.TclError:
@@ -299,6 +409,27 @@ class Windows:
         Fifth_Window = Login_Window()
         Fifth_Window.Make_Win(Window = LWIN, window_title = "Login", bgimg = "5thbg")
 
+    def info_window(self):
+        info_window = tk.CTkToplevel()
+        window_height = 600
+        window_width = 1200
+        info_window.title("Information")
 
+        screen_width = info_window.winfo_screenwidth()
+        screen_height = info_window.winfo_screenheight()
+
+        x_cordinate = int((screen_width/2) - (window_width/2))
+        y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+        info_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+        info_window.resizable(False, False)
+
+        f = open('Info.txt','r')
+        data = f.read()
+        
+        rules = tk.CTkLabel(master = info_window, text = data, text_font = ("calibri", 12), bg_color = "#1e1e1e")
+        rules.place(x = 0, y = 0, width = 1200, height = 600)
+
+        info_window.mainloop()
 
 WINDOW = Windows()

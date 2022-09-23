@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 from tkinter import END, INSERT, PhotoImage, ttk, messagebox
 from Window_maker import Window_maker
 import pickle as p
+import csv
 
 class Login_Window():
     def __init__(self):
@@ -109,6 +110,7 @@ class Login_Window():
                 user_Entry.delete(0, END)
                 pass_Entry.delete(0, END)
                 return False
+
 
         def delu():
             self.del_window()
@@ -246,11 +248,13 @@ class Login_Window():
             email = remail_Entry.get()
             re_enter = re_pass_Entry.get()
 
-            query = '''insert into login values(%s,%s,%s);'''
+            query1 = '''insert into login values(%s,%s,%s);'''
+            query2 = '''insert into scores values(%s,0,0,0,Null)'''
 
             if password == re_enter:
                 # try:
-                mycursor.execute(query, [(username),(password),(email)])
+                mycursor.execute(query1, [(username),(password),(email)])
+                mycursor.execute(query2, [(username)])
                 mysqldb.commit()
                 messagebox.showinfo("","Registered Successfully\nLogin with your details")
                 mysqldb.close()
@@ -327,14 +331,15 @@ class Login_Window():
         del_user_Entry.place(x = 30, y = 110, width = 310, height = 30)
 
         def sql_delete():
-            del_user_Entry.delete(0, END)
-
+            
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()
             username = del_user_Entry.get()
 
-            query = '''delete from login where username = %s;'''
-            mycursor.execute(query, [(username)])
+            query1 = '''delete from scores where username = %s;'''
+            mycursor.execute(query1,[(username)])
+            query2 = '''delete from login where username = %s;'''
+            mycursor.execute(query2, [(username)])
             mysqldb.commit()
 
             if username == "":
@@ -343,7 +348,39 @@ class Login_Window():
                 messagebox.showinfo("","User successfully deleted")
 
             mysqldb.close()
-            
+
+            f = open("slither_highscore.csv", "r", newline = "")
+            csr = csv.reader(f)
+            t = open("temp1.csv", 'w', newline = "")
+            csw = csv.writer(t)
+            found = 0
+            for i in csr:
+                if i[0] != username:
+                    csw.writerow(i)
+                else:
+                    found = 1
+            f.close()
+            t.close()
+            if found == 1:
+                os.remove("slither_highscore.csv")
+                os.rename("temp1.csv", "slither_highscore.csv")
+
+            f = open("space_highscore.csv", "r", newline = "")
+            csr = csv.reader(f)
+            t = open("temp2.csv", 'w', newline = "")
+            csw = csv.writer(t)
+            found = 0
+            for i in csr:
+                if i[0] != username:
+                    csw.writerow(i)
+                else:
+                    found = 1
+            f.close()
+            t.close()
+            if found == 1:
+                os.remove("space_highscore.csv")
+                os.rename("temp2.csv", "space_highscore.csv")
+
         def deswin():
             try:
                 del_Window.destroy()
