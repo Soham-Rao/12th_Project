@@ -250,7 +250,7 @@ class Windows:
     def Fourth_Window(self):
         Space_Window = tk.CTkToplevel()
 
-        FourthWin = Window_maker()
+        FourthWin = Window_maker()          
 
         def open_space_game():
             self.Tenth_Window()
