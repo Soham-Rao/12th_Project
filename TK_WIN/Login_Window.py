@@ -16,7 +16,7 @@ class Login_Window():
         self.current_user = None
         self.windowmaker = Window_maker()
 
-
+#FIRST MAKE WINDOW LOGIN
     def Make_Win(self, Window, window_title, bgimg):
 
         Window.title(window_title)
@@ -48,7 +48,7 @@ class Login_Window():
 
         Window.mainloop()
 
-
+#WIDGETS
     def widgetmaker(self, Window):
         user_Entry = tk.CTkEntry(master = Window)
         user_Entry.place(x = 30, y = 110, width = 310, height = 30)
@@ -114,6 +114,8 @@ class Login_Window():
                 pass_Entry.delete(0, END)
                 return False
 
+        def update():
+            self.update_Window()
 
         def admin():
             self.admin_window()
@@ -150,7 +152,7 @@ class Login_Window():
         register_button.place(x = 195, y = 220, width = 110, height = 50)
 
         admin_button = tk.CTkButton(master = Window, text = "Access Admin", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = admin)
-        admin_button.place(x = 150, y = 330, width = 200, height = 50)
+        admin_button.place(x = 150, y = 310, width = 200, height = 50)
 
         back_button = tk.CTkButton(master = Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 30)
@@ -158,7 +160,11 @@ class Login_Window():
         logout_button = tk.CTkButton(master = Window, text = "Logout", text_color = "black", text_font = ("Times New Roman", 12), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = logoff, image = logout_img, compound = "right")
         logout_button.place(x = 340, y = 8, width = 100, height = 44)
 
+        update_button = tk.CTkButton(master = Window, text = "Update details", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = update)
+        update_button.place(x = 150, y = 380, width = 200, height = 50)
 
+
+#REGISTER
     def reg_window(self):
         register_Window = tk.CTkToplevel()
         register_Window.title("Register")
@@ -416,8 +422,35 @@ class Login_Window():
             img = img.resize((20,20), resample = 0)
             button_img = ImageTk.PhotoImage(img)
 
+            def deswin():
+                try:
+                    user_Window.destroy()
+                except tkinter.TclError:
+                    pass
+
             back_button = tk.CTkButton(master = user_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
             back_button.place(x = 10, y = 10, width = 60, height = 30)
+
+            mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
+            mycursor = mysqldb.cursor()            
+            query = '''select username from login;'''
+            mycursor.execute(query)
+            data = mycursor.fetchall()
+
+            f1 = open("t.txt","w")
+            for i in data:
+                a = "".join(i)
+                f1.write(a)
+                f1.write("\n")
+            f1.close()
+
+            f2 = open("t.txt","r")
+            d = f2.read()
+            f2.close()
+
+            user_label = tk.CTkLabel(master = user_Window, text = d, text_color = "White", text_font = ("calibri", 27), bg_color = "#1e1e1e")
+            user_label.place(x = 0, y = 0, height = 500, width = 450)
+
 
             user_Window.mainloop()
 
@@ -497,6 +530,7 @@ class Login_Window():
         def sql_login():
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()
+            global username
             username = user_Entry.get()
             password = pass_Entry.get()
 
@@ -536,3 +570,130 @@ class Login_Window():
         back_button.place(x = 10, y = 10, width = 60, height = 30)
 
         admin_Window.mainloop()
+
+    def update_Window(self):
+        update_Window = tk.CTkToplevel()
+        update_Window.title("Update your details")
+
+        window_height = 500
+        window_width = 450
+
+        screen_width = update_Window.winfo_screenwidth()
+        screen_height = update_Window.winfo_screenheight()
+
+        x_cordinate = int((screen_width/2) - (window_width/2))
+        y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+        update_Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+        update_Window.resizable(False, False)
+
+        global bg_img
+        global username
+ 
+        background = tk.CTkLabel(master = update_Window, image = bg_img)
+        background.place(x = 0, y = 0)
+
+        user_Entry = tk.CTkEntry(master = update_Window)
+        user_Entry.place(x = 30, y = 110, width = 310, height = 30)
+
+        user_Entry.insert(0, "Username")
+
+        def on_enter(e):
+            user_Entry.delete(0, END)
+        def on_leave(e):
+            if user_Entry.get() == "":
+                user_Entry.insert(0, "Username")
+
+        user_Entry.bind("<FocusIn>", on_enter)
+        user_Entry.bind("<FocusOut>", on_leave)
+
+        email_Entry = tk.CTkEntry(master = update_Window)
+        email_Entry.place(x = 30, y = 160, width = 310, height = 30)
+
+        email_Entry.insert(0, "Enter new Email")
+
+        def on_enter(e):
+            email_Entry.delete(0, END)
+        def on_leave(e):
+            if email_Entry.get() == "":
+                email_Entry.insert(0, "Enter new Email")
+
+        email_Entry.bind("<FocusIn>", on_enter)
+        email_Entry.bind("<FocusOut>", on_leave)
+
+        pass_Entry = tk.CTkEntry(master = update_Window)
+        pass_Entry.place(x = 30, y = 210, width = 310, height = 30)
+
+        pass_Entry.insert(0, "Enter new Password")
+
+        def on_enter(e):
+            pass_Entry.delete(0, END)
+        def on_leave(e):
+            if pass_Entry.get() == "":
+                pass_Entry.insert(0, "Enter new Password")
+
+        pass_Entry.bind("<FocusIn>", on_enter)
+        pass_Entry.bind("<FocusOut>", on_leave)
+
+        repass_Entry = tk.CTkEntry(master = update_Window)
+        repass_Entry.place(x = 30, y = 260, width = 310, height = 30)
+
+        repass_Entry.insert(0, "Confirm new Password")
+
+        def on_enter(e):
+            pass_Entry.delete(0, END)
+        def on_leave(e):
+            if pass_Entry.get() == "":
+                pass_Entry.insert(0, "Confirm new Password")
+
+        pass_Entry.bind("<FocusIn>", on_enter)
+        pass_Entry.bind("<FocusOut>", on_leave)
+
+        def sql_update():
+            
+            username = user_Entry.get()
+            mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
+            mycursor = mysqldb.cursor()
+            email = email_Entry.get()
+            pass1 = pass_Entry.get()
+            pass2 = repass_Entry.get()
+
+            if str(pass1) == str(pass2):
+
+                query = '''update login set email_id = %s and password = %s where username = %s'''
+                mycursor.execute(query, [(email),(pass1),(username)])
+                data = mycursor.fetchall()
+                mysqldb.commit()
+
+                messagebox.showinfo("","successfully updated")
+                mysqldb.close()
+                email_Entry.delete(0, END)
+                pass_Entry.delete(0, END)
+                repass_Entry.delete(0, END)
+            
+            else:
+                messagebox.showerror("","Passwords don't match")
+                mysqldb.close()
+                email_Entry.delete(0, END)
+                pass_Entry.delete(0, END)
+                repass_Entry.delete(0, END)
+
+        def deswin():
+            try:
+                update_Window.destroy()
+            except tkinter.TclError:
+                pass
+
+        img = Image.open(os.path.join("imgs","back_button.png"))
+        #img.save(os.path.join("imgs","back_button.png"))
+        img = img.resize((20,20), resample = 0)
+        button_img = ImageTk.PhotoImage(img)
+
+        update_button = tk.CTkButton(master = update_Window, text = "Update", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_update)
+        update_button.place(x = 35, y = 320, width = 100, height = 50)
+
+        back_button = tk.CTkButton(master = update_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
+        back_button.place(x = 10, y = 10, width = 60, height = 30)
+
+
+        update_Window.mainloop()

@@ -75,6 +75,7 @@ class Windows:
 
         SecondWin.Make_Win(Window = Gamewin, window_title = "Games", bgimg = "2ndbg", text1 = "Slither.io", text2 = "Space Battles", text3 = "Game3", text4 = "back", fgcolor = "#9532a8", hcolor = "#b55bc7", command1 = open_slither_window, command2 = open_space_window, command3 = None, command4 = close)
 
+#SLITHERIO WINDOW
     def Third_Window(Self):
         Slither_Window = tk.CTkToplevel()
 
@@ -145,13 +146,6 @@ class Windows:
 
             Score_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
             Score_window.resizable(False, False)
-
-            # f = open(os.path.join("","slither_highscore.csv"),'r')
-            # csr = csv.reader(f)
-            # D = {}
-            # for i in csr:
-            #     D[i[0]] = i[1] #dictionary (username: score)
-            # f.close()
             
             def open_search():
                 search = entry.get()
@@ -172,18 +166,20 @@ class Windows:
 
                 f = open("slither_highscore.csv", "r", newline = "")
                 csr = csv.reader(f)
-                D = {}
+                D = []
                 found = 0
                 for i in csr:
                     if i[0] == search:
-                        D[i[0]] = i[1]
+                        D = i
                         found = 1
                 f.close()
                 if found == 0:
-                    D["user"] = "Not found"
+                    D = ["User","Not found"]
                 entry.delete(0, END)
+
+                D1 = " :- ".join(D) 
                         
-                details = tk.CTkLabel(master = Search_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
+                details = tk.CTkLabel(master = Search_window, text = D1, text_font = ("calibri", 17), bg_color = "#1a1a1a")
                 details.place(x = 0, y = 0, width = 1000, height = 200)
 
                 Search_window.mainloop()
@@ -194,41 +190,24 @@ class Windows:
                     pass
 
 
-            style = ttk.Style()
-            style.theme_use("default")
-            style.configure("Treeview", background = "#1e1e1e", foreground = "black", rowheight = 50, fieldbackground = "#1e1e1e")
-            style.map("Treeview", background = [('selected', '#1a1a1a')])
-
-            tree_frame = tk.CTkFrame(master = Score_window)
-            tree_frame.place(x = 430, y = 20, height = 400, width = 440)
-
-            tree_scroll = tk.CTkScrollbar(master = tree_frame)
-            tree_frame.pack(side = RIGHT, fill = Y)
-
-            data_tree = ttk.Treeview(master = Score_window, yscrollcommand = tree_scroll.set)
-            #tree_scroll.config(command = data_tree.yview)
-
-            data_tree['columns'] = ('Username','Highscore')
-            data_tree.column("#0", width = 0, minwidth = 0, stretch = NO)
-            data_tree.column("#1", width = 220, minwidth = 30, anchor = W)
-            data_tree.column("#2", width = 100, minwidth = 30, anchor = E)
-            data_tree.heading("#1",text = "Username", anchor = W)
-            data_tree.heading("#2", text = "Highscore", anchor = W)
-
-            data_tree.place(x = 430, y = 20, height = 400, width = 400)
-
-            f = open(os.path.join("","slither_highscore.csv"),'r')
-            csr = csv.reader(f)
-            count = 0
+          
+            f1 = open(os.path.join("","slither_highscore.csv"),'r')
+            f2 = open(os.path.join("","t1.txt"),'w')
+            csr = csv.reader(f1)
+           
             for i in csr:
-                data_tree.insert(parent = '', index = 'end', iid = count, text = '', values = (i[0], i[1]))
-                count += 1
+                a = " :- ".join(i)
+                f2.write(a)
+                f2.write("\n")
+            f1.close()
+            f2.close()
 
-            f.close()
-
+            f3 = open(os.path.join("","t1.txt"),'r')
+            D = f3.read()
+            f3.close()
             
-            # scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
-            # scores.place(x = 0, y = 0, width = 1200, height = 500)
+            scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
+            scores.place(x = 0, y = 0, width = 1200, height = 500)
 
             search_button = tk.CTkButton(master = Score_window, text_color = "#0d0a01", text = "Search a user", text_font = ("Calibri", 12), bg_color = "#faf9f5", fg_color = "#faf9f5", hover_color = "#c9c8c1", command = open_search)
             search_button.place(x = 550, y = 540, width = 150, height = 30)
@@ -246,7 +225,7 @@ class Windows:
         
         ThirdWin.Make_Win(Window = Slither_Window, window_title = "slither.io", bgimg = "3rdbg", text1 = "Play", text2 = "Rules", text3 = "Highscores", text4 = "back", fgcolor = "#363d36", hcolor = "#626962", command1 = open_slither_game, command2 = open_slither_rules, command3 = open_slither_highscores, command4 = close)
 
-
+#SPACE WINDOW
     def Fourth_Window(self):
         Space_Window = tk.CTkToplevel()
 
@@ -304,13 +283,6 @@ class Windows:
 
             Score_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
             Score_window.resizable(False, False)
-
-            f = open(os.path.join("","space_highscore.csv"),'r')
-            csr = csv.reader(f)
-            D = {}
-            for i in csr:
-                D[i[0]] = i[1] #dictionary (username: score)
-            f.close()
             
             def open_search():
                 search = entry.get()
@@ -331,19 +303,20 @@ class Windows:
 
                 f = open("space_highscore.csv", "r", newline = "")
                 csr = csv.reader(f)
-                D = {}
+                D = []
                 found = 0
                 for i in csr:
                     if i[0] == search:
-                        D[i[0]] = i[1]
+                        D = i
                         found = 1
                 f.close()
                 if found == 0:
-                    D["user"] = "Not found"
+                    D = ["User","Not found"]
                 entry.delete(0, END)
-                        
 
-                details = tk.CTkLabel(master = Search_window, text = D,text_font = ("calibri", 17), bg_color = "#1a1a1a")
+                D1 = " :- ".join(D) 
+                        
+                details = tk.CTkLabel(master = Search_window, text = D1, text_font = ("calibri", 17), bg_color = "#1a1a1a")
                 details.place(x = 0, y = 0, width = 1000, height = 200)
 
                 Search_window.mainloop()
@@ -354,7 +327,21 @@ class Windows:
                     pass
 
 
+          
+            f1 = open(os.path.join("","space_highscore.csv"),'r')
+            f2 = open(os.path.join("","t2.txt"),'w')
+            csr = csv.reader(f1)
+           
+            for i in csr:
+                a = " :- ".join(i)
+                f2.write(a)
+                f2.write("\n")
+            f1.close()
+            f2.close()
 
+            f3 = open(os.path.join("","t2.txt"),'r')
+            D = f3.read()
+            f3.close()
             
             scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
             scores.place(x = 0, y = 0, width = 1200, height = 500)
@@ -377,7 +364,7 @@ class Windows:
 
 
 
-
+#CHOICE WINDOW
     def Tenth_Window(self):
         Choose_Window = tk.CTkToplevel()
         Choose_Window.title("Choose a mode")
@@ -424,12 +411,12 @@ class Windows:
 
         Choose_Window.mainloop()
     
-
+#LOGIN METHOD
     def login(self):
         LWIN = tk.CTkToplevel()
         Fifth_Window = Login_Window()
         Fifth_Window.Make_Win(Window = LWIN, window_title = "Login", bgimg = "5thbg")
-
+#INFO WINDOW
     def info_window(self):
         info_window = tk.CTkToplevel()
         window_height = 600
@@ -452,5 +439,5 @@ class Windows:
         rules.place(x = 0, y = 0, width = 1200, height = 600)
 
         info_window.mainloop()
-
+#__MAIN__#
 WINDOW = Windows()
