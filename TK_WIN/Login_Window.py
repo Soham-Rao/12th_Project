@@ -660,9 +660,8 @@ class Login_Window():
 
             if str(pass1) == str(pass2):
 
-                query = '''update login set email_id = %s and password = %s where username = %s'''
+                query = '''update login set email_id = %s, password = %s where username = %s'''
                 mycursor.execute(query, [(email),(pass1),(username)])
-                data = mycursor.fetchall()
                 mysqldb.commit()
 
                 messagebox.showinfo("","successfully updated")
