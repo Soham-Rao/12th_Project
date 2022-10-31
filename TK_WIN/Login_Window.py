@@ -131,6 +131,9 @@ class Login_Window():
             self.windowmaker.user = "Guest"
             messagebox.showinfo("","You have successfully logged out")
 
+        def score():
+            pass
+
 
         img1 = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
@@ -163,6 +166,8 @@ class Login_Window():
         update_button = tk.CTkButton(master = Window, text = "Update details", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = update)
         update_button.place(x = 150, y = 380, width = 200, height = 50)
 
+        scores_button = tk.CTkButton(master = Window, text = "Highscores", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = score)
+        scores_button.place(x = 150, y = 440, width = 200, height = 50)
 
 #REGISTER
     def reg_window(self):
