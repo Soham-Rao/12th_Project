@@ -131,8 +131,6 @@ class Login_Window():
             self.windowmaker.user = "Guest"
             messagebox.showinfo("","You have successfully logged out")
 
-        def score():
-            pass
 
 
         img1 = Image.open(os.path.join("imgs","back_button.png"))
@@ -166,9 +164,7 @@ class Login_Window():
         update_button = tk.CTkButton(master = Window, text = "Update details", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = update)
         update_button.place(x = 150, y = 380, width = 200, height = 50)
 
-        scores_button = tk.CTkButton(master = Window, text = "Highscores", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = score)
-        scores_button.place(x = 150, y = 440, width = 200, height = 50)
-
+        
 #REGISTER
     def reg_window(self):
         register_Window = tk.CTkToplevel()
@@ -563,6 +559,8 @@ class Login_Window():
                 pass_Entry.delete(0, END)
                 return False
 
+        
+
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
@@ -573,6 +571,8 @@ class Login_Window():
 
         back_button = tk.CTkButton(master = admin_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 30)
+        
+        
 
         admin_Window.mainloop()
 
@@ -701,3 +701,11 @@ class Login_Window():
 
 
         update_Window.mainloop()
+
+    def admin_controls(self):
+        pass
+
+# def score():
+#             pass
+#         scores_button = tk.CTkButton(master = admin_Window, text = "Highscores", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = score)
+#         scores_button.place(x = 150, y = 280, width = 200, height = 50)
