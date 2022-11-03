@@ -672,9 +672,6 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
-        def score():
-            pass
-
         def del_win():
             self.del_window()
 
@@ -735,6 +732,67 @@ class Login_Window():
 
 
             user_Window.mainloop()
+
+        def score():
+            score_Window = tk.CTkToplevel()
+            score_Window.title("Admin Controls")
+
+            window_height = 500
+            window_width = 450
+
+            screen_width = score_Window.winfo_screenwidth()
+            screen_height = score_Window.winfo_screenheight()
+
+            x_cordinate = int((screen_width/2) - (window_width/2))
+            y_cordinate = int(((screen_height/2) - (window_height/2))-50)
+
+            score_Window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
+            score_Window.resizable(False, False)
+
+            global bg_img
+
+            background = tk.CTkLabel(master = score_Window, image = bg_img)
+            background.place(x = 0, y = 0)
+
+            img = Image.open(os.path.join("imgs","back_button.png"))
+            #img.save(os.path.join("imgs","back_button.png"))
+            img = img.resize((20,20), resample = 0)
+            button_img = ImageTk.PhotoImage(img)
+
+            def deswin():
+                try:
+                    score_Window.destroy()
+                except tkinter.TclError:
+                    pass
+
+            back_button = tk.CTkButton(master = score_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
+            back_button.place(x = 10, y = 10, width = 60, height = 30)
+
+            mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
+            mycursor = mysqldb.cursor()            
+            query = '''select slitherio, space_battles from scores;'''
+            mycursor.execute(query)
+            data = mycursor.fetchall()
+
+            f1 = open("t.txt","w")
+            for i in data:
+                a = "".join(i)
+                f1.write(a)
+                f1.write("\n")
+            f1.close()
+
+            f2 = open("t.txt","r")
+            d = f2.read()
+            f2.close()
+
+            score_label = tk.CTkLabel(master = score_Window, text = d, text_color = "White", text_font = ("calibri", 27), bg_color = "#1e1e1e")
+            score_label.place(x = 0, y = 0, height = 500, width = 450)
+
+
+            score_Window.mainloop()
+
+
+
 
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
