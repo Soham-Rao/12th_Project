@@ -770,14 +770,16 @@ class Login_Window():
 
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()            
-            query = '''select slitherio, space_battles from scores;'''
+            query = '''select username, slitherio, space_battles from scores;'''
             mycursor.execute(query)
             data = mycursor.fetchall()
 
             f1 = open("t.txt","w")
+            a = "(name, slither, space)"+"\n"
+            f1.write(a)    
             for i in data:
-                a = "".join(i)
-                f1.write(a)
+                b = " ".join(str(i))
+                f1.write(b)
                 f1.write("\n")
             f1.close()
 
@@ -785,7 +787,7 @@ class Login_Window():
             d = f2.read()
             f2.close()
 
-            score_label = tk.CTkLabel(master = score_Window, text = d, text_color = "White", text_font = ("calibri", 27), bg_color = "#1e1e1e")
+            score_label = tk.CTkLabel(master = score_Window, text = d, text_color = "White", text_font = ("calibri", 22), bg_color = "#1e1e1e")
             score_label.place(x = 0, y = 0, height = 500, width = 450)
 
 
