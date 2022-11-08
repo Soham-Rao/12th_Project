@@ -778,8 +778,7 @@ class Login_Window():
             a = "(name, slither, space)"+"\n"
             f1.write(a)    
             for i in data:
-                b = " ".join(str(i))
-                f1.write(b)
+                f1.write(str(i))
                 f1.write("\n")
             f1.close()
 

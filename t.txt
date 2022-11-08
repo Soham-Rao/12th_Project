@@ -1,4 +1,5 @@
-(name, slither, space)
-( ' a b c ' ,   0 ,   0 )
-( ' r i s h i ' ,   4 5 ,   1 1 )
-( ' S a m ' ,   4 9 0 ,   0 )
+karun
+shoham
+shreyas
+soham
+viswak
