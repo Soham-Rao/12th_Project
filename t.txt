@@ -1,5 +1,5 @@
-karun
-shoham
-shreyas
-soham
-viswak
+(name, slither, space)
+('abc', 0, 0)
+('rishi', 45, 11)
+('Sam', 490, 0)
+('samarth', 0, 41)

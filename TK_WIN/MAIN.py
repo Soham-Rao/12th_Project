@@ -1,5 +1,3 @@
-#https://www.youtube.com/watch?v=6VbzpWL49Q4
-
 import os
 import csv
 import tkinter 
