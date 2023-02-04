@@ -101,14 +101,7 @@ class MainGame_Slither:
         #Window events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                #SCORES IN CSV
-                '''
-                f = open("slither_highscore.csv", "w", newline = "")
-                csw = csv.writer(f)
-                L = ['Username', 'Score']
-                csw.writerow(L)
-                f.close()
-                '''
+                #SCORES IN CSV AND SQL
                 self.highscore.create_csv(self.player.score)
                 self.highscore.create_sql(self.player.score)
                 self.quit = True

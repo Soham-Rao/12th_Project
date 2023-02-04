@@ -21,18 +21,18 @@ class Highscore:
         csr = csv.reader(f3)
         D = {}
         for user in csr:
-            D[user[0]] = user[1] #dictionary (username: score)
+            D[user[0]] = user[1] #dictionary {username: score}
         f3.close()
         
 
-        if username not in D.keys():
+        if username not in D.keys(): #checks if user is already in the file or not
             f2 = open("slither_highscore.csv", "a", newline = "")
             csw = csv.writer(f2)
             L = [username, score]
             csw.writerow(L)
             f2.close()
         else:
-            if score > int(D[username]):
+            if score > int(D[username]): #checks if new score is greater than the previous one
                 f2 = open("slither_highscore.csv", "r+", newline = "")
                 csr = csv.reader(f2)
                 L = []

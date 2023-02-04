@@ -259,7 +259,7 @@ class Login_Window():
             re_enter = re_pass_Entry.get()
 
             query1 = '''insert into login values(%s,%s,%s);'''
-            query2 = '''insert into scores values(%s,0,0,0,Null)'''
+            query2 = '''insert into scores values(%s,0,0,0)'''
 
             if password == re_enter:
                 # try:
