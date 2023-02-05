@@ -1,5 +1,4 @@
 (name, slither, space)
-('abc', 0, 0)
-('rishi', 45, 11)
-('Sam', 490, 0)
-('samarth', 0, 41)
+('Karun', 50, 0)
+('Ram', 10, 6)
+('Soham', 210, 0)

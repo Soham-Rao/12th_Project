@@ -1,9 +1,2 @@
 Username :- Score
-karun :- 3370
-soham :- 13820
-shreyas :- 210
-shoham :- 2625
-admin :- 350
-abc :- 0
-viswak :- 75
-jack :- 1585
+

@@ -78,9 +78,10 @@ class Login_Window():
         pass_Entry.bind("<FocusIn>", on_enter)
         pass_Entry.bind("<FocusOut>", on_leave)
 
+        def on_enter_press(e):
+            sql_login()
 
-        def register():
-            self.reg_window()
+        Window.bind("<Return>", on_enter_press)
 
         def sql_login():
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
@@ -106,25 +107,36 @@ class Login_Window():
 
                 self.windowmaker.user = str(self.current_user)
 
+                deswin()
                 return True
             else:
                 messagebox.showerror("","Incorrect Username or Password")
                 mysqldb.close()
                 user_Entry.delete(0, END)
                 pass_Entry.delete(0, END)
+
+                deswin()
                 return False
 
-        def update():
-            self.update_Window()
-
-        def admin():
-            self.admin_window()
 
         def deswin():
             try:
                 Window.destroy()
             except tkinter.TclError:
                 pass
+
+
+        def register():
+            self.reg_window()
+            deswin()
+
+        def update():
+            self.update_Window()
+            deswin()
+
+        def admin():
+            self.admin_window()
+            deswin()
 
         def logoff():
             self.current_user = None
@@ -246,6 +258,10 @@ class Login_Window():
         re_pass_Entry.bind("<FocusIn>", on_enter)
         re_pass_Entry.bind("<FocusOut>", on_leave)
 
+        def on_enter_press(e):
+            sql_register()
+
+        register_Window.bind("<Return>", on_enter_press)
 
         def destroy():
             register_Window.destroy()
@@ -261,7 +277,7 @@ class Login_Window():
             query1 = '''insert into login values(%s,%s,%s);'''
             query2 = '''insert into scores values(%s,0,0,0)'''
 
-            if password == re_enter:
+            if password == re_enter and len(password) > 4:
                 # try:
                 mycursor.execute(query1, [(username),(password),(email)])
                 mycursor.execute(query2, [(username)])
@@ -272,18 +288,22 @@ class Login_Window():
                 rpass_Entry.delete(0, END)
                 rpass_Entry.delete(0, END)
                 re_pass_Entry.delete(0, END)
+                deswin()
                 return True
                 # except IntegrityError:
                 #     messagebox.showerror("","Username already exists")
 
             else:
-                messagebox.showerror("","Password doesn't match confirmation password")
+                messagebox.showerror("","Password doesn't match confirmation password or too small")
                 mysqldb.close()
                 ruser_Entry.delete(0, END)
                 rpass_Entry.delete(0, END)
                 rpass_Entry.delete(0, END)
                 re_pass_Entry.delete(0, END)
+                deswin()
                 return False
+
+            
 
         def deswin():
             try:
@@ -391,11 +411,18 @@ class Login_Window():
                 os.remove("space_highscore.csv")
                 os.rename("temp2.csv", "space_highscore.csv")
 
+            deswin()
+
         def deswin():
             try:
                 del_Window.destroy()
             except tkinter.TclError:
                 pass
+
+        def on_enter_press(e):
+            sql_delete()
+
+        del_Window.bind("<Return>", on_enter_press)
 
         
 
@@ -462,6 +489,11 @@ class Login_Window():
         pass_Entry.bind("<FocusIn>", on_enter)
         pass_Entry.bind("<FocusOut>", on_leave)
 
+        def on_enter_press(e):
+            sql_login()
+
+        admin_Window.bind("<Return>", on_enter_press)
+
         def deswin():
             try:
                 admin_Window.destroy()
@@ -491,15 +523,19 @@ class Login_Window():
                 
                 self.windowmaker.user = str(self.current_user)
 
+                deswin()
                 return True
+            
             else:
                 messagebox.showerror("","Incorrect Username or Password")
                 mysqldb.close()
                 user_Entry.delete(0, END)
                 pass_Entry.delete(0, END)
+            
+                deswin()
                 return False
 
-        
+
 
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
@@ -594,6 +630,11 @@ class Login_Window():
         pass_Entry.bind("<FocusIn>", on_enter)
         pass_Entry.bind("<FocusOut>", on_leave)
 
+        def on_enter_press(e):
+            sql_update()
+
+        update_Window.bind("<Return>", on_enter_press)
+
         def sql_update():
             
             username = user_Entry.get()
@@ -614,13 +655,15 @@ class Login_Window():
                 email_Entry.delete(0, END)
                 pass_Entry.delete(0, END)
                 repass_Entry.delete(0, END)
-            
+                deswin()
+
             else:
                 messagebox.showerror("","Passwords don't match")
                 mysqldb.close()
                 email_Entry.delete(0, END)
                 pass_Entry.delete(0, END)
                 repass_Entry.delete(0, END)
+                deswin()
 
         def deswin():
             try:
@@ -674,6 +717,7 @@ class Login_Window():
 
         def del_win():
             self.del_window()
+            deswin()
 
         def see_user():
             user_Window = tk.CTkToplevel()
