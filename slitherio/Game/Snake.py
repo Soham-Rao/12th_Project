@@ -6,8 +6,7 @@ from Segment import Segment
 MAX_CHECK_DISTANCE = 500 #Distance to check for combat to avoid overload
 
 
-#PARENT CLASS SNAKE
-
+#PARENT CLASS SNAKE - parent class for common properties of both player and enemy snakes
 class Snake(Object):
     #CONSTRUCTOR FUNCTION
     def __init__(self, x, y, w, h, filepath):

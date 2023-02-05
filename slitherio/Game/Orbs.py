@@ -1,10 +1,9 @@
 #IMPORTING 
 from Object import Object
 
-
 score_increment = 5
-#CLASS ORBS
 
+#CLASS ORBS - class for food
 class Orbs(Object):
     #CONSTRUCTOR FUNCTION
     def __init__(self, x, y, r, filepath):

@@ -1,3 +1,4 @@
+#importing
 import pygame
 import os
 import random
@@ -7,6 +8,7 @@ from AI import AI
 from Font import Font
 from Space_Highscore import Highscore
 
+#Variables
 FPS = 60
 
 PLAYER_HEIGHT = 75
@@ -21,8 +23,11 @@ MAX_BULLETS = 5
 Player_hit = pygame.USEREVENT + 1
 enemy_hit = pygame.USEREVENT + 2
 
+#maingame class - class for all main game events and functions
 class MainGame_Space:
+    #constructor function
     def __init__(self):
+        #private variables
         self.WinDims = (1000, 700)
         self.window = pygame.display.set_mode(self.WinDims) 
         pygame.display.set_caption("Space Battles")
@@ -49,11 +54,13 @@ class MainGame_Space:
         self.fontrenderer = Font()
         self.Highscore = Highscore()
 
+    #maingame loop till exit
     def play(self):
         while self.quit == False:
             self.update()
             self.render()
 
+    #checking for events
     def update(self):
         self.clock.tick(FPS)
 
@@ -62,15 +69,10 @@ class MainGame_Space:
 
         for event in events:
             if event.type == pygame.QUIT:
-                #SCORES IN CSV
-                '''
-                f = open("space_highscore.csv", "w", newline = "")
-                csw = csv.writer(f)
-                L = ['Username', 'Score']
-                csw.writerow(L)
-                f.close()
-                '''
+                #scores upon exit
                 self.Highscore.create_csv(self.score)
+                self.Highscore.create_sql(self.score)
+
                 self.quit = True
 
             if event.type == enemy_hit:
@@ -88,19 +90,14 @@ class MainGame_Space:
         self.player.movements(keypressed,self.border, self.WinDims)
         self.player.move_bullet(self.player_bullets)
         
-        
+        #enemy movements        
         if self.player_health > 0:
             self.enemy.movements(self.border, self.WinDims)
             self.enemy.move_bullet(self.enemy_bullets)
         elif self.player_health <= 0:
             pygame.time.delay(2000)
-            '''
-            f = open("space_highscore.csv", "w", newline = "")
-            csw = csv.writer(f)
-            L = ['Username', 'Score']
-            csw.writerow(L)
-            f.close()
-            '''
+
+        #score upon death
             self.Highscore.create_csv(self.score)
             self.Highscore.create_sql(self.score)
             self.quit = True
@@ -137,22 +134,25 @@ class MainGame_Space:
                 
 
 
-
+    #drawing on screen
     def render(self):
         self.window.blit(self.Winbgm, (0,0))
         
+        #borders
         pygame.draw.rect(self.window, self.colors[0], self.border)
 
+        #spaceships
         for spaceship in self.spaceships:
             spaceship.draw(self.window)
 
+        #bullets
         for bullet in self.player_bullets:
             pygame.draw.rect(self.window, self.colors[6], bullet)
 
         for bullet in self.enemy_bullets:
             pygame.draw.rect(self.window, self.colors[2], bullet)
 
-
+        #text
         self.fontrenderer.render(self.player_health, self.window, self.WinDims, self.score)
         
         if self.player_health <= 0:

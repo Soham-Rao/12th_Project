@@ -1,11 +1,8 @@
+#importing
 import pygame
 import os
 
-
 pygame.init()
-
-
-
 
 #__WINDOW AND VARIABLES__##
 WIDTH, HEIGHT = 1000, 700
@@ -52,17 +49,15 @@ YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
 
 
-
-
-
-
-
-
 #__FUNCTIONS__##
+
+#class multiplayer - class of all maingame functions
 class multiplayer:
+    #constructor function
     def __init__(self):
         pass
     
+    #function to draw on screen
     def draw_window(self, red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
         pygame.display.set_caption("Space Battles")
         WIN.blit(SPACE, (0, 0))
@@ -84,6 +79,7 @@ class multiplayer:
         pygame.draw.rect(WIN, CYAN, BORDER)
         pygame.display.update()
         
+#functions for movements
     def yellow_movements(self, key_pressed,yellow):
         if key_pressed[pygame.K_a] and yellow.x - VELOCITY > 0: # left
             yellow.x -= VELOCITY
@@ -105,6 +101,7 @@ class multiplayer:
         if key_pressed[pygame.K_DOWN] and red.y + VELOCITY + red.height < HEIGHT-25:  # down
             red.y += VELOCITY
 
+    #function for bullets
     def bullets(self, yellow_bullets, red_bullets, yellow, red):
         for bullet in yellow_bullets:
             bullet.x += BULLET_SPEED
@@ -122,7 +119,7 @@ class multiplayer:
             elif bullet.x < 0:
                 red_bullets.remove(bullet)
 
-
+    #function for text rendering
     def draw_winner(self, text):
         draw_text = WINNER_FONT.render(text, 1, WHITE)
         WIN.blit(draw_text, (
@@ -130,7 +127,7 @@ class multiplayer:
         pygame.display.update()
         pygame.time.delay(5000)
 
-
+    #maingame events
     def main(self):
         red = pygame.Rect(900, 330, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
         yellow = pygame.Rect(100, 330, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
@@ -199,7 +196,7 @@ class multiplayer:
         red_bullets.clear()
         self.main()
 
-
+#__Main__#
 
 game = multiplayer()
 game.main()

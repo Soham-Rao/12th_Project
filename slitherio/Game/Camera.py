@@ -1,7 +1,7 @@
 #IMPORTING
 import pygame
 
-#CLASS CAMERA
+#CLASS CAMERA - class for camera movements
 class Camera:
     #CONSTRUCTOR FUNCTION
     def __init__(self, x, y, playerDims, winDims):

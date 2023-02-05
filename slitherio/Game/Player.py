@@ -2,8 +2,7 @@
 import pygame
 from Snake import Snake
 
-#CLASS PLAYER
-
+#CLASS PLAYER - class for properties of the player
 class Player(Snake):
     #CONSTRUCTOR FUNCTION
     def __init__(self, x, y, w, h, filepath, WinDims):
@@ -24,7 +23,7 @@ class Player(Snake):
         return super().update(snakes) #returning true/false for combat
             
 
-
+    #check direction to move in - mouse
     def calc_direction(self):
 
         #Movement with mouse
@@ -40,7 +39,7 @@ class Player(Snake):
 
         self.direction =  [self.direction[0] / vectLength, self.direction[1] / vectLength] 
         
-        
+    #boost function on mouse click
     def boost(self):
             #Boosting player
             mousePress = pygame.mouse.get_pressed()

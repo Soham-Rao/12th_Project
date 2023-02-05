@@ -1,16 +1,20 @@
+#importing
 import os
 import tkinter 
 from PIL import Image, ImageTk
 from tkinter import PhotoImage, ttk, messagebox
 import customtkinter as tk
 
-
+#class windowmaker - class to help create windows
 class Window_maker():
+    #constructor function
     def __init__(self):
+        #private variables
         tk.set_appearance_mode("dark")
         tk.set_default_color_theme("dark-blue")
         self.user = "Guest"        
     
+    #function that makes the window
     def Make_Win(self, Window, window_title, bgimg, text1, text2, text3, text4, fgcolor, hcolor, command1, command2, command3, command4):
         
         Window.title(window_title)
@@ -40,7 +44,7 @@ class Window_maker():
 
         Window.mainloop()
     
-
+    #function that makes the buttons
     def buttonmaker(self, Window, text1, text2, text3, text4, fgcolor, hcolor, command1, command2, command3, command4):
         Button1 = tk.CTkButton(master = Window, text = text1, text_font = ("Times New Roman", 30), fg_color = fgcolor, hover_color = hcolor, bg_color = fgcolor ,command = command1)
         Button1.place(x = 10, y = 370, width = 250, height = 70)

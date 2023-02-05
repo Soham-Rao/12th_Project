@@ -1,18 +1,21 @@
+#Importing
 from Snake import Snake
 
+#class ai - class for all enemy functions
 class AI(Snake):
-    #CONSTRUCTOR FUNCTION
+    #CONSTRUCTOR FUNCTION 
     def __init__(self, x, y, w, h, filepath):
         #Inheriting from object
         super().__init__(x, y, w, h, filepath)
         #Private variables
         self.speed = 7
 
-
+    #updates direction of ai and updates position
     def update(self, orbs, snakes):
         self.calc_direction(orbs)
         return super().update(snakes) #returning true/false for combat
 
+    #checks which direction to move in 
     def calc_direction(self, orbs):
         
         if len(orbs) == 0: #after all eaten

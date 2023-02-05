@@ -1,3 +1,4 @@
+#importing
 import mysql.connector as sql
 
 import os
@@ -9,14 +10,17 @@ from Window_maker import Window_maker
 import pickle as p
 import csv
 
+#CLASS FOR ALL LOGIN REGISTRATION AND ADMIN FUNCTIONS
 class Login_Window():
+    #constructor function
     def __init__(self):
+        #private variable and custom tkiter setup
         tk.set_appearance_mode("dark")
         tk.set_default_color_theme("dark-blue")
         self.current_user = None
         self.windowmaker = Window_maker()
 
-#FIRST MAKE WINDOW LOGIN
+    #making login window
     def Make_Win(self, Window, window_title, bgimg):
 
         Window.title(window_title)
@@ -48,13 +52,15 @@ class Login_Window():
 
         Window.mainloop()
 
-#WIDGETS
+    #widgets for the login window
     def widgetmaker(self, Window):
+        #entry widgets
         user_Entry = tk.CTkEntry(master = Window)
         user_Entry.place(x = 30, y = 110, width = 310, height = 30)
 
         user_Entry.insert(0, "Username")
 
+        #binds
         def on_enter(e):
             user_Entry.delete(0, END)
         def on_leave(e):
@@ -83,6 +89,7 @@ class Login_Window():
 
         Window.bind("<Return>", on_enter_press)
 
+        #LOGIN CHECK FUNCTION
         def sql_login():
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()
@@ -125,7 +132,7 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
-
+        #button functions
         def register():
             self.reg_window()
             deswin()
@@ -144,7 +151,7 @@ class Login_Window():
             messagebox.showinfo("","You have successfully logged out")
 
 
-
+        #images
         img1 = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img1 = img1.resize((20,20), resample = 0)
@@ -155,6 +162,7 @@ class Login_Window():
         img2 = img2.resize((30,40), resample = 0)
         logout_img = ImageTk.PhotoImage(img2)
 
+        #buttons
         login_button = tk.CTkButton(master = Window, text = "Login", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_login)
         login_button.place(x = 35, y = 220, width = 100, height = 50)
 
@@ -176,8 +184,7 @@ class Login_Window():
         update_button = tk.CTkButton(master = Window, text = "Update details", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = update)
         update_button.place(x = 150, y = 380, width = 200, height = 50)
 
-        
-#REGISTER
+    #making registration window
     def reg_window(self):
         register_Window = tk.CTkToplevel()
         register_Window.title("Register")
@@ -202,11 +209,14 @@ class Login_Window():
         background = tk.CTkLabel(master = register_Window, image = bg_img)
         background.place(x = 0, y = 0)
 
+
+        #entry widgets
         ruser_Entry = tk.CTkEntry(master = register_Window)
         ruser_Entry.place(x = 20, y = 100, width = 300, height = 30)
 
         ruser_Entry.insert(0, "Username")
 
+        #binds
         def on_enter(e):
             ruser_Entry.delete(0, END)
         def on_leave(e):
@@ -266,6 +276,7 @@ class Login_Window():
         def destroy():
             register_Window.destroy()
 
+        #FUNCTION TO REGISTER USING SQL TABLE
         def sql_register():
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()
@@ -277,6 +288,7 @@ class Login_Window():
             query1 = '''insert into login values(%s,%s,%s);'''
             query2 = '''insert into scores values(%s,0,0,0)'''
 
+            #check password strength and if re entered password is the same
             if password == re_enter and len(password) > 4:
                 # try:
                 mycursor.execute(query1, [(username),(password),(email)])
@@ -311,11 +323,13 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
+        #images
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
         button_img = ImageTk.PhotoImage(img)
 
+        #buttons
         register_button_2 = tk.CTkButton(master = register_Window, text = "Register", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_register)
         register_button_2.place(x = 80, y = 270, width = 110, height = 50)
 
@@ -330,6 +344,7 @@ class Login_Window():
 
         register_Window.mainloop()
 
+    #making deletion window
     def del_window(self):
         del_Window = tk.CTkToplevel()
         del_Window.title("Remove a User")
@@ -360,6 +375,7 @@ class Login_Window():
         del_user_Entry = tk.CTkEntry(master = del_Window)
         del_user_Entry.place(x = 30, y = 110, width = 310, height = 30)
 
+        #FUNCTION TO DELETE USER USING SQL (ADMIN)
         def sql_delete():
             
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
@@ -413,6 +429,7 @@ class Login_Window():
 
             deswin()
 
+        #button functions
         def deswin():
             try:
                 del_Window.destroy()
@@ -425,12 +442,13 @@ class Login_Window():
         del_Window.bind("<Return>", on_enter_press)
 
         
-
+        #images
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
         button_img = ImageTk.PhotoImage(img)
 
+        #buttons
         back_button = tk.CTkButton(master = del_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 25)
 
@@ -440,6 +458,7 @@ class Login_Window():
 
         del_Window.mainloop()
 
+    #making admin login window
     def admin_window(self):
         admin_Window = tk.CTkToplevel()
         admin_Window.title("Admin Controls")
@@ -461,11 +480,13 @@ class Login_Window():
         background = tk.CTkLabel(master = admin_Window, image = bg_img)
         background.place(x = 0, y = 0)
 
+        #entry widgets
         user_Entry = tk.CTkEntry(master = admin_Window)
         user_Entry.place(x = 30, y = 110, width = 310, height = 30)
 
         user_Entry.insert(0, "Username")
 
+        #binds
         def on_enter(e):
             user_Entry.delete(0, END)
         def on_leave(e):
@@ -500,6 +521,7 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
+        #FUNCTION TO CHECK IF USER IS ADMIN
         def sql_login():
             mysqldb = sql.connect(host = "localhost", user = "root", password = "password", database = "project")
             mycursor = mysqldb.cursor()
@@ -536,12 +558,13 @@ class Login_Window():
                 return False
 
 
-
+        #images
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
         button_img = ImageTk.PhotoImage(img)
 
+        #buttons
         login_button = tk.CTkButton(master = admin_Window, text = "Login", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_login)
         login_button.place(x = 35, y = 220, width = 100, height = 50)
 
@@ -552,6 +575,7 @@ class Login_Window():
 
         admin_Window.mainloop()
 
+    #making update window
     def update_Window(self):
         update_Window = tk.CTkToplevel()
         update_Window.title("Update your details")
@@ -574,11 +598,13 @@ class Login_Window():
         background = tk.CTkLabel(master = update_Window, image = bg_img)
         background.place(x = 0, y = 0)
 
+        #entry widgets
         user_Entry = tk.CTkEntry(master = update_Window)
         user_Entry.place(x = 30, y = 110, width = 310, height = 30)
 
         user_Entry.insert(0, "Username")
 
+        #binds
         def on_enter(e):
             user_Entry.delete(0, END)
         def on_leave(e):
@@ -635,6 +661,7 @@ class Login_Window():
 
         update_Window.bind("<Return>", on_enter_press)
 
+        #FUNCTION TO UPDATE DETAILS WITH SQL
         def sql_update():
             
             username = user_Entry.get()
@@ -671,11 +698,13 @@ class Login_Window():
             except tkinter.TclError:
                 pass
 
+        #images
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
         button_img = ImageTk.PhotoImage(img)
 
+        #buttons
         update_button = tk.CTkButton(master = update_Window, text = "Update", text_font = ("Calibri", 20), fg_color = "#c371c5", hover_color = "#e886eb", command = sql_update)
         update_button.place(x = 35, y = 320, width = 100, height = 50)
 
@@ -685,6 +714,7 @@ class Login_Window():
 
         update_Window.mainloop()
 
+    #making admin window
     def admin_controls(self):
         adm_Window = tk.CTkToplevel()
         adm_Window.title("Admin Controls")
@@ -714,11 +744,13 @@ class Login_Window():
                 adm_Window.destroy()
             except tkinter.TclError:
                 pass
-
+        
+        #button functions
         def del_win():
             self.del_window()
             deswin()
 
+        #list of users
         def see_user():
             user_Window = tk.CTkToplevel()
             user_Window.title("Admin Controls")
@@ -751,6 +783,7 @@ class Login_Window():
                 except tkinter.TclError:
                     pass
 
+            #buttons
             back_button = tk.CTkButton(master = user_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
             back_button.place(x = 10, y = 10, width = 60, height = 30)
 
@@ -777,6 +810,7 @@ class Login_Window():
 
             user_Window.mainloop()
 
+        #list of scores
         def score():
             score_Window = tk.CTkToplevel()
             score_Window.title("Admin Controls")
@@ -809,6 +843,7 @@ class Login_Window():
                 except tkinter.TclError:
                     pass
 
+            #buttons
             back_button = tk.CTkButton(master = score_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
             back_button.place(x = 10, y = 10, width = 60, height = 30)
 
@@ -838,12 +873,13 @@ class Login_Window():
 
 
 
-
+        #images
         img = Image.open(os.path.join("imgs","back_button.png"))
         #img.save(os.path.join("imgs","back_button.png"))
         img = img.resize((20,20), resample = 0)
         button_img = ImageTk.PhotoImage(img)
 
+        #buttons
         back_button = tk.CTkButton(master = adm_Window, text = "back", text_color = "black", text_font = ("Times New Roman", 8), fg_color = "#c371c5", hover_color = "#e886eb", bg_color = "#c371c5" ,command = deswin, image = button_img, compound = "left")
         back_button.place(x = 10, y = 10, width = 60, height = 25)
 
@@ -858,3 +894,7 @@ class Login_Window():
 
         adm_Window.mainloop()
 
+
+
+
+#__END__#

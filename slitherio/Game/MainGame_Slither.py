@@ -25,14 +25,12 @@ PLAYER_START_Y = 0
 
 PLAYER_TEXTURE = "textures\\body_red.png"
 
-#MAINGAME CLASS
-
+#MAINGAME CLASS - class for the main game
 class MainGame_Slither:
     #CONSTRUCTOR FUNCTION
     def __init__(self):
         pygame.init()
-
-
+        #PRIVATE VARIABLES
         self.WinDims = (1000,700)
         self.window = pygame.display.set_mode(self.WinDims)
         pygame.display.set_caption("Slither.io")
@@ -112,6 +110,7 @@ class MainGame_Slither:
             if orb.update(self.snakes):
                 self.orbs.remove(orb)
 
+        #respwaning orbs if less
         if len(self.orbs) <= 300:
             for i in range(NUM_ORBS):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
@@ -151,6 +150,7 @@ class MainGame_Slither:
                 snake.segments.clear() #removing body part
                 self.snakes.remove(snake) #removing head
 
+        #respawning ai if too less
         if len(self.snakes) <= 7:
             for i in range(NUM_AI):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
@@ -162,8 +162,6 @@ class MainGame_Slither:
                 self.snakes.append(newAI)
 
 
-        
-        
         #Camera events
         self.Camera.update(self.player.rect.x, self.player.rect.y)
 

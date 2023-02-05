@@ -1,15 +1,21 @@
+#importing
 import pygame
 import random
 from Spaceships import Spaceships
 
+#class AI - class for enemy functions
 class AI(Spaceships):
+    #constructor function
     def __init__(self, x, y, w ,h, filepath, rotate):
+        #initializing private class variables
         super().__init__(x, y, w ,h, filepath, rotate)
+        #private variables
         self.prevtime = 0
         self.time = 0
         self.max_bul = 10
         self.bul_vel = 7
 
+    #function for random movement
     def movements(self, border, windims):
         dir = ['R','L','U','D']
 
@@ -34,6 +40,7 @@ class AI(Spaceships):
                 for i in range(randy):
                     self.rect.y += 1
 
+    #function for random shooting
     def bullets(self, List):
         self.time = pygame.time.get_ticks()
 
@@ -43,6 +50,7 @@ class AI(Spaceships):
             bullet = pygame.Rect((self.rect.x), (self.rect.y + self.rect.height//2 -2), (20), (4))
             List.append(bullet)
 
+    #movement of bullets
     def move_bullet(self, List):           
         for bullet in List:
                 bullet.x -= self.bul_vel

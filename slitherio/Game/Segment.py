@@ -1,9 +1,10 @@
+#importing
 import pygame
 from Object import Object
 
-       
-    
+#class segemnts - class for the body parts of the snakes
 class Segment(Object):
+    #constructor function
     def __init__(self, x, y, w, h, filepath,speed):
         #Inheriting from Object
         super().__init__(x, y, w, h, filepath)
@@ -12,6 +13,7 @@ class Segment(Object):
         self.newtime = 0
         self.prevtime = 0
 
+    #updating movement for body parts to follow head
     def update(self, targetPos, segments):
         self.boost()
 
@@ -33,7 +35,7 @@ class Segment(Object):
         self.rect.x += direction[0] * self.speed
         self.rect.y += direction[1] * self.speed
 
-
+    #boost speed for body on mouse click
     def boost(self):
             #Boosting player
             mousePress = pygame.mouse.get_pressed()

@@ -1,3 +1,4 @@
+#importing
 import os
 import csv
 import tkinter 
@@ -7,16 +8,19 @@ from PIL import Image, ImageTk
 from tkinter import E, NO, RIGHT, W, Y, PhotoImage, ttk, messagebox, END
 from Login_Window import Login_Window
 
-
+#class windows - MAIN CLASS OF THE GAME AND THE GUI
 class Windows:
+    #constructor function
     def __init__(self):
         self.First_Window()
 
+    #creating the first window 
     def First_Window(self):        
         Window = tk.CTk()
         
         FirstWin = Window_maker()
-        
+
+        #functions for the buttons        
         def open_win2():
             self.Second_Window()
             try:
@@ -40,16 +44,17 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-
+        #the window
         FirstWin.Make_Win(Window = Window, window_title = "Arcade", bgimg = "1stbg", text1 = "Login/Logout", text2 = "Games", text3 = "Info", text4 = "Exit", fgcolor = "#9532a8", hcolor = "#b55bc7", command1 = login, command2 = open_win2, command3 = info, command4 = close)
         
 
-
+    #creating the next window
     def Second_Window(self):
         Gamewin = tk.CTkToplevel()
 
         SecondWin = Window_maker()
-        
+
+        #funtions for the buttons        
         def open_slither_window():
             self.Third_Window()
             try:
@@ -70,22 +75,24 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-
+        #creating the window
         SecondWin.Make_Win(Window = Gamewin, window_title = "Games", bgimg = "2ndbg", text1 = "Slither.io", text2 = "Space Battles", text3 = "Game3", text4 = "back", fgcolor = "#9532a8", hcolor = "#b55bc7", command1 = open_slither_window, command2 = open_space_window, command3 = None, command4 = close)
 
-#SLITHERIO WINDOW
+    #SLITHERIO WINDOW
     def Third_Window(Self):
         Slither_Window = tk.CTkToplevel()
 
         ThirdWin = Window_maker()
         
+        #opening game
         def open_slither_game():
             os.system(r'python slitherio\Game\main_slither.py')
             try:
                 Slither_Window.destroy()
             except tkinter.TclError:
                 pass
-            
+        
+        #button functions
         def open_slither_rules():
             Rule_window = tk.CTkToplevel()
             window_height = 600
@@ -129,7 +136,7 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-
+        #score window
         def open_slither_highscores():
             Score_window = tk.CTkToplevel()
             window_height = 600
@@ -145,6 +152,7 @@ class Windows:
             Score_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
             Score_window.resizable(False, False)
             
+            #searching for a particular persons score
             def open_search():
                 search = entry.get()
 
@@ -203,7 +211,8 @@ class Windows:
             f3 = open(os.path.join("","t1.txt"),'r')
             D = f3.read()
             f3.close()
-            
+
+            #buttons
             scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
             scores.place(x = 0, y = 0, width = 1200, height = 500)
 
@@ -220,22 +229,24 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-        
+        #making the window
         ThirdWin.Make_Win(Window = Slither_Window, window_title = "slither.io", bgimg = "3rdbg", text1 = "Play", text2 = "Rules", text3 = "Highscores", text4 = "back", fgcolor = "#363d36", hcolor = "#626962", command1 = open_slither_game, command2 = open_slither_rules, command3 = open_slither_highscores, command4 = close)
 
-#SPACE WINDOW
+    #SPACE WINDOW
     def Fourth_Window(self):
         Space_Window = tk.CTkToplevel()
 
         FourthWin = Window_maker()          
 
+        #opening the game
         def open_space_game():
             self.Tenth_Window()
             try:
                 Space_Window.destroy()
             except tkinter.TclError:
                 pass
-            
+        
+        #button functions
         def open_space_rules():
             Rule_window = tk.CTkToplevel()
             window_height = 600
@@ -267,6 +278,7 @@ class Windows:
             except tkinter.TclError:
                 pass
 
+        #opening highscores
         def open_space_highscores():
             Score_window = tk.CTkToplevel()
             window_height = 600
@@ -281,7 +293,8 @@ class Windows:
 
             Score_window.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
             Score_window.resizable(False, False)
-            
+
+            #searching for a particular persons score
             def open_search():
                 search = entry.get()
 
@@ -341,6 +354,8 @@ class Windows:
             D = f3.read()
             f3.close()
             
+ 
+            #buttons
             scores = tk.CTkLabel(master = Score_window, text = D, text_font = ("calibri", 17), bg_color = "#1a1a1a")
             scores.place(x = 0, y = 0, width = 1200, height = 500)
 
@@ -357,12 +372,12 @@ class Windows:
             except tkinter.TclError:
                 pass
 
-
+        #creating the window
         FourthWin.Make_Win(Window = Space_Window, window_title = "Space Battles", bgimg = "4thbg", text1 = "Play", text2 = "Rules", text3 = "Highscores", text4 = "back", fgcolor = "#011e3e", hcolor = "#36587d", command1 = open_space_game, command2 = open_space_rules, command3 = open_space_highscores, command4 = close)
 
 
 
-#CHOICE WINDOW
+    #CHOICE WINDOW
     def Tenth_Window(self):
         Choose_Window = tk.CTkToplevel()
         Choose_Window.title("Choose a mode")
@@ -387,6 +402,7 @@ class Windows:
         background = tk.CTkLabel(master = Choose_Window, image = bg_img)
         background.place(x = 0, y = 0)
 
+        #opening the game
         def open_multi():
             os.system(r'python Space_Battles\Space_Battles\main_old_multiplayer.py')
             try:
@@ -401,6 +417,7 @@ class Windows:
             except tkinter.TclError:
                 pass
             
+        #buttons
         Button1 = tk.CTkButton(master = Choose_Window, text = "Single-Player", text_font = ("Times New Roman", 20), fg_color = "#011e3e", hover_color = "#36587d", bg_color = "#011e3e" ,command = open_single)
         Button1.place(x = 15, y = 150, width = 180, height = 60)
 
@@ -409,12 +426,13 @@ class Windows:
 
         Choose_Window.mainloop()
     
-#LOGIN METHOD
+    #LOGIN WINDOW
     def login(self):
         LWIN = tk.CTkToplevel()
         Fifth_Window = Login_Window()
         Fifth_Window.Make_Win(Window = LWIN, window_title = "Login", bgimg = "5thbg")
-#INFO WINDOW
+
+    #INFO WINDOW
     def info_window(self):
         info_window = tk.CTkToplevel()
         window_height = 600
@@ -437,5 +455,6 @@ class Windows:
         rules.place(x = 0, y = 0, width = 1200, height = 600)
 
         info_window.mainloop()
+
 #__MAIN__#
 WINDOW = Windows()

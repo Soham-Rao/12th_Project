@@ -1,4 +1,1 @@
 import pygame
-
-print("hello")
-
