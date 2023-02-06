@@ -21,7 +21,7 @@ We also plan on hosting it on the internet so people can enjoy our games and rel
 Resources used - 
 python modules - pygame, customtkinter, os, pickle, csv, Pillow
 sql - 3 tables
-csv - 3 files
+csv - 2 files (+ 2 temporary files during deletion)
 binary - 1 file
 
 Hope you enjoy!!!
