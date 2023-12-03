@@ -14,8 +14,8 @@ from Slither_Highscore import Highscore
 #DEFINING VARIABLES
 
 FPS = 60
-NUM_ORBS = 700
-NUM_AI = 15
+NUM_ORBS = 200
+NUM_AI = 7
 
 PLAYER_START_W = 50
 PLAYER_START_H = 50
@@ -100,8 +100,8 @@ class MainGame_Slither:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 #SCORES IN CSV AND SQL
-                self.highscore.create_csv(self.player.score)
-                self.highscore.create_sql(self.player.score)
+                #self.highscore.create_csv(self.player.score)
+                #self.highscore.create_sql(self.player.score)
                 self.quit = True
         
 
@@ -111,7 +111,7 @@ class MainGame_Slither:
                 self.orbs.remove(orb)
 
         #respwaning orbs if less
-        if len(self.orbs) <= 300:
+        if len(self.orbs) <= 100:
             for i in range(NUM_ORBS):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
                 randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)
@@ -151,7 +151,7 @@ class MainGame_Slither:
                 self.snakes.remove(snake) #removing head
 
         #respawning ai if too less
-        if len(self.snakes) <= 7:
+        if len(self.snakes) <= 3:
             for i in range(NUM_AI):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
                 randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)

@@ -44,7 +44,7 @@ class Player(Snake):
             #Boosting player
             mousePress = pygame.mouse.get_pressed()
             if mousePress[0] == True:
-                self.speed = 12
+                self.speed = 13
             elif mousePress[0] == False:
-                self.speed = 8
+                self.speed = 7
                 

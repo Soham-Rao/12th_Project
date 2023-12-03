@@ -13,7 +13,7 @@ class Snake(Object):
         #Inheriting from object
         super().__init__(x, y, w, h, filepath)
         #private variables
-        self.speed = 8
+        self.speed = 7
         self.prevScore = 0
         self.score = 0
         self.segments = []
@@ -76,7 +76,7 @@ class Snake(Object):
 
             newSegment = Segment(startX, startY, self.rect.w, self.rect.h, self.texturePath,self.speed)
             self.segments.append(newSegment)
-            #print(self.segments)
+            
 
 
     #Target position for segments
