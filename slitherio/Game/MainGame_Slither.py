@@ -14,8 +14,8 @@ from Slither_Highscore import Highscore
 #DEFINING VARIABLES
 
 FPS = 60
-NUM_ORBS = 200
-NUM_AI = 7
+NUM_ORBS = 500
+NUM_AI = 15
 
 PLAYER_START_W = 50
 PLAYER_START_H = 50
@@ -111,7 +111,7 @@ class MainGame_Slither:
                 self.orbs.remove(orb)
 
         #respwaning orbs if less
-        if len(self.orbs) <= 100:
+        if len(self.orbs) <= 250:
             for i in range(NUM_ORBS):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
                 randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)
@@ -142,8 +142,9 @@ class MainGame_Slither:
                     size = PLAYER_START_W
                     texture = random.choice(self.textures)
 
-                    newOrbs = Orbs(startx, starty, size, texture)
-                    self.orbs.append(newOrbs)
+                    for i in range(0, 4):
+                        newOrbs = Orbs(startx, starty, size, texture)
+                        self.orbs.append(newOrbs)
 
 
                 #removing snake
@@ -151,7 +152,7 @@ class MainGame_Slither:
                 self.snakes.remove(snake) #removing head
 
         #respawning ai if too less
-        if len(self.snakes) <= 3:
+        if len(self.snakes) <= 7:
             for i in range(NUM_AI):
                 randx = random.randint(-self.WinDims[0] * 3, self.WinDims[0] * 3)
                 randy = random.randint(-self.WinDims[1] * 3, self.WinDims[1] * 3)
